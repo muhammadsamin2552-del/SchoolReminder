@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3730a3">
+<link rel="manifest" href="manifest.webmanifest">
+<title>SchoolReminder</title>
+<style>
+:root{--blue:#315be8;--purple:#5537c9;--ink:#202746;--muted:#707a9a;--bg:#f4f5ff;--line:#e7e9f6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans Thai",sans-serif;color:var(--ink)}
+header{padding:26px 20px 34px;color:white;background:linear-gradient(130deg,#3326a8,#2769ee);border-radius:0 0 28px 28px}
+.top{display:flex;align-items:center;justify-content:space-between}.brand{font-size:25px;font-weight:800;letter-spacing:-.5px}.tag{opacity:.88;font-size:13px;margin-top:3px}
+main{max-width:760px;margin:auto;padding:0 16px 96px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:-18px}
+.stat,.panel,.task{background:white;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px #303b7510}
+.stat{padding:14px 8px;text-align:center}.num{font-size:25px;font-weight:800;color:var(--blue)}.stat small{font-size:11px;color:var(--muted)}
+.actions{display:flex;gap:9px;margin:18px 0}.primary{flex:1;border:0;border-radius:15px;padding:15px;background:linear-gradient(110deg,#5b48ed,#3730bd);color:white;font-weight:750;font-size:16px}
+.ghost{border:1px solid #d9def7;background:white;border-radius:15px;padding:0 14px;color:var(--purple);font-weight:700}
+h2{font-size:18px;margin:22px 2px 12px}.panel{padding:16px;margin:14px 0}.field{display:block;width:100%;padding:12px 13px;border:1px solid #dfe3f4;border-radius:12px;margin:7px 0 12px;font:inherit;background:#fff;color:var(--ink)}
+label{font-size:13px;color:#596382;font-weight:650}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.submit{width:100%;padding:13px;border:0;border-radius:12px;background:#3f46d8;color:white;font-size:15px;font-weight:750}
+.task{padding:13px;margin:10px 0;display:flex;gap:11px;align-items:center}.datebox{min-width:62px;text-align:center;background:#eef1ff;color:#3648c8;border-radius:13px;padding:9px 5px;font-weight:750;font-size:12px}
+.taskbody{flex:1;min-width:0}.tasktitle{font-weight:750;overflow-wrap:anywhere}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{font-size:11px;border-radius:99px;padding:4px 8px;background:#fff0df;color:#a45b08;white-space:nowrap}
+.done .tasktitle{text-decoration:line-through;color:#9299ae}.done .datebox{background:#e8f8ef;color:#16824c}
+.iconbtn{border:0;background:#f1f2fa;border-radius:10px;padding:8px;color:#606b8d}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 5px calc(10px + env(safe-area-inset-bottom));z-index:2}
+.tabs button{border:0;background:none;color:#77809c;font:inherit;font-size:12px;padding:5px 10px}.tabs button.active{color:#4338ca;font-weight:800}
+.empty{text-align:center;color:var(--muted);padding:25px 8px}.note{font-size:12px;color:var(--muted);line-height:1.55}
+.hidden{display:none!important}
+@media(min-width:650px){main{padding-left:24px;padding-right:24px}.task{padding:16px}.brand{font-size:29px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">🎓 SchoolReminder</div><div class="tag">Plan · Remember · Be On Time</div></div><div style="font-size:25px">📚</div></div></header>
+<main>
+<section class="stats">
+ <div class="stat"><div class="num" id="total">0</div><small>งานทั้งหมด</small></div>
+ <div class="stat"><div class="num" id="completed">0</div><small>เสร็จแล้ว</small></div>
+ <div class="stat"><div class="num" id="pending">0</div><small>ยังไม่เสร็จ</small></div>
+</section>
+<div class="actions"><button class="primary" id="showForm">＋ เพิ่มงานใหม่</button><button class="ghost" id="notifyBtn">🔔 แจ้งเตือน</button></div>
+<section class="panel hidden" id="formPanel">
+ <h2 style="margin-top:0">เพิ่มงานโรงเรียน</h2>
+ <form id="taskForm">
+  <label for="title">ชื่องาน</label><input class="field" id="title" required maxlength="90" placeholder="เช่น ทำรายงานวิทยาศาสตร์">
+  <div class="row"><div><label for="subject">วิชา</label><input class="field" id="subject" maxlength="40" placeholder="เช่น วิทยาศาสตร์"></div>
+  <div><label for="due">วันส่ง</label><input class="field" id="due" type="date" required></div></div>
+  <label for="time">เวลา (ถ้าทราบ)</label><input class="field" id="time" type="time">
+  <label for="details">รายละเอียดเพิ่มเติม</label><textarea class="field" id="details" rows="2" maxlength="250" placeholder="รายละเอียดหรือสิ่งที่ต้องเตรียม"></textarea>
+  <button class="submit" type="submit">บันทึกงาน</button>
+ </form>
+</section>
+<h2 id="listHeading">งานที่ต้องทำ</h2>
+<div id="taskList"></div>
+<section class="panel hidden" id="statsPanel"><h2 style="margin-top:0">สถิติของฉัน</h2><p id="statsText"></p><p class="note">สถิติคำนวณจากงานที่บันทึกไว้ในอุปกรณ์นี้</p></section>
+<p class="note">ข้อมูลเก็บไว้ในเบราว์เซอร์ของอุปกรณ์นี้ หากล้างข้อมูลเว็บไซต์หรือเปลี่ยนอุปกรณ์ ข้อมูลอาจหายได้ ควรสำรองข้อมูลไว้</p>
+</main>
+<nav class="tabs">
+<button class="active" data-tab="home">⌂<br>หน้าหลัก</button>
+<button data-tab="calendar">▦<br>ปฏิทิน</button>
+<button data-tab="alerts">♧<br>แจ้งเตือน</button>
+<button data-tab="stats">▥<br>สถิติ</button>
+</nav>
+<script>
+const KEY='schoolreminder.tasks.v1';
+let tasks=JSON.parse(localStorage.getItem(KEY)||'[]');
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+function save(){localStorage.setItem(KEY,JSON.stringify(tasks));render();}
+function fmt(d){if(!d)return '-';return new Date(d+'T00:00:00').toLocaleDateString('th-TH',{day:'numeric',month:'short'});}
+function render(){
+ $('total').textContent=tasks.length;
+ $('completed').textContent=tasks.filter(t=>t.done).length;
+ $('pending').textContent=tasks.filter(t=>!t.done).length;
+ const mode=document.querySelector('.tabs button.active')?.dataset.tab||'home';
+ let shown=[...tasks].sort((a,b)=>a.due.localeCompare(b.due));
+ if(mode==='alerts') shown=shown.filter(t=>!t.done && t.due<=today());
+ if(mode==='calendar') shown=shown.filter(t=>t.due>=today());
+ $('listHeading').textContent=mode==='calendar'?'งานตามกำหนดส่ง':mode==='alerts'?'งานที่ถึงกำหนดหรือเลยกำหนด':'งานที่ต้องทำ';
+ $('taskList').innerHTML=shown.length?'':'<div class="empty">ยังไม่มีงานในรายการ<br>กด “เพิ่มงานใหม่” เพื่อเริ่มต้น</div>';
+ shown.forEach(t=>{
+  const el=document.createElement('div');el.className='task'+(t.done?' done':'');
+  const dueLabel=t.due<today()&&!t.done?'เลยกำหนด':t.due===today()&&!t.done?'วันนี้':fmt(t.due);
+  el.innerHTML=`<div class="datebox">${dueLabel}</div><div class="taskbody"><div class="tasktitle"></div><div class="sub"></div></div><button class="iconbtn" aria-label="เปลี่ยนสถานะ">${t.done?'↶':'✓'}</button><button class="iconbtn" aria-label="ลบงาน">×</button>`;
+  el.querySelector('.tasktitle').textContent=t.title;
+  el.querySelector('.sub').textContent=[t.subject,t.time?'เวลา '+t.time:'',t.details].filter(Boolean).join(' · ');
+  const buttons=el.querySelectorAll('button');
+  buttons[0].onclick=()=>{t.done=!t.done;save();};
+  buttons[1].onclick=()=>{if(confirm('ต้องการลบงานนี้หรือไม่?')){tasks=tasks.filter(x=>x.id!==t.id);save();}};
+  $('taskList').appendChild(el);
+ });
+ $('statsText').textContent=`ทำเสร็จ ${tasks.filter(t=>t.done).length} จาก ${tasks.length} งาน`;
+ $('statsPanel').classList.toggle('hidden',mode!=='stats');
+ $('taskList').classList.toggle('hidden',mode==='stats');
+ $('formPanel').classList.toggle('hidden',mode==='stats');
+}
+$('showForm').onclick=()=>{$('formPanel').classList.toggle('hidden');$('title').focus();};
+$('taskForm').onsubmit=e=>{e.preventDefault();tasks.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title:$('title').value.trim(),subject:$('subject').value.trim(),due:$('due').value,time:$('time').value,details:$('details').value.trim(),done:false});save();e.target.reset();$('formPanel').classList.add('hidden');};
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render();});
+$('notifyBtn').onclick=async()=>{
+ if(!('Notification' in window)){alert('เบราว์เซอร์นี้ยังไม่รองรับการแจ้งเตือน');return;}
+ if(!('serviceWorker' in navigator)){alert('ต้องเปิดแอปผ่านเว็บไซต์ HTTPS ที่ติดตั้ง Service Worker ก่อน');return;}
+ const p=await Notification.requestPermission();
+ if(p==='granted'){alert('เปิดสิทธิ์แจ้งเตือนแล้ว ในรุ่นทดลองนี้จะตรวจงานเมื่อเปิดแอปอยู่');}
+ else alert('ยังไม่ได้อนุญาตการแจ้งเตือน');
+};
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+$('due').min=today();
+render();
+</script>
+</body></html>
