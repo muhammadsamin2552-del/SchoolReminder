@@ -3,109 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#3730a3">
-<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#5b42c8">
+<link rel="manifest" href="./manifest.webmanifest">
 <title>SchoolReminder</title>
 <style>
-:root{--blue:#315be8;--purple:#5537c9;--ink:#202746;--muted:#707a9a;--bg:#f4f5ff;--line:#e7e9f6}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans Thai",sans-serif;color:var(--ink)}
-header{padding:26px 20px 34px;color:white;background:linear-gradient(130deg,#3326a8,#2769ee);border-radius:0 0 28px 28px}
-.top{display:flex;align-items:center;justify-content:space-between}.brand{font-size:25px;font-weight:800;letter-spacing:-.5px}.tag{opacity:.88;font-size:13px;margin-top:3px}
-main{max-width:760px;margin:auto;padding:0 16px 96px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:-18px}
-.stat,.panel,.task{background:white;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 18px #303b7510}
-.stat{padding:14px 8px;text-align:center}.num{font-size:25px;font-weight:800;color:var(--blue)}.stat small{font-size:11px;color:var(--muted)}
-.actions{display:flex;gap:9px;margin:18px 0}.primary{flex:1;border:0;border-radius:15px;padding:15px;background:linear-gradient(110deg,#5b48ed,#3730bd);color:white;font-weight:750;font-size:16px}
-.ghost{border:1px solid #d9def7;background:white;border-radius:15px;padding:0 14px;color:var(--purple);font-weight:700}
-h2{font-size:18px;margin:22px 2px 12px}.panel{padding:16px;margin:14px 0}.field{display:block;width:100%;padding:12px 13px;border:1px solid #dfe3f4;border-radius:12px;margin:7px 0 12px;font:inherit;background:#fff;color:var(--ink)}
-label{font-size:13px;color:#596382;font-weight:650}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.submit{width:100%;padding:13px;border:0;border-radius:12px;background:#3f46d8;color:white;font-size:15px;font-weight:750}
-.task{padding:13px;margin:10px 0;display:flex;gap:11px;align-items:center}.datebox{min-width:62px;text-align:center;background:#eef1ff;color:#3648c8;border-radius:13px;padding:9px 5px;font-weight:750;font-size:12px}
-.taskbody{flex:1;min-width:0}.tasktitle{font-weight:750;overflow-wrap:anywhere}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{font-size:11px;border-radius:99px;padding:4px 8px;background:#fff0df;color:#a45b08;white-space:nowrap}
-.done .tasktitle{text-decoration:line-through;color:#9299ae}.done .datebox{background:#e8f8ef;color:#16824c}
-.iconbtn{border:0;background:#f1f2fa;border-radius:10px;padding:8px;color:#606b8d}
-.tabs{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 5px calc(10px + env(safe-area-inset-bottom));z-index:2}
-.tabs button{border:0;background:none;color:#77809c;font:inherit;font-size:12px;padding:5px 10px}.tabs button.active{color:#4338ca;font-weight:800}
-.empty{text-align:center;color:var(--muted);padding:25px 8px}.note{font-size:12px;color:var(--muted);line-height:1.55}
-.hidden{display:none!important}
-@media(min-width:650px){main{padding-left:24px;padding-right:24px}.task{padding:16px}.brand{font-size:29px}}
+:root{--p:#6047d8;--p2:#8068ef;--ink:#252344;--muted:#77758f;--bg:#f6f4ff;--line:#ebe8f7;--white:#fff;--red:#e45e72;--green:#279b70}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Thai",sans-serif}
+header{background:linear-gradient(135deg,#5439c4,#8068ed);color:white;padding:19px 18px 25px;border-radius:0 0 25px 25px}
+.headrow{display:flex;justify-content:space-between;align-items:center}.brand{font-size:22px;font-weight:850}.subbrand{font-size:12px;opacity:.88;margin-top:2px}
+main{max-width:760px;margin:auto;padding:0 15px calc(100px + env(safe-area-inset-bottom))}
+.greet{background:#fff;color:var(--ink);border-radius:19px;padding:15px;margin-top:-13px;box-shadow:0 7px 20px #34266c12}
+.greet strong{font-size:17px}.greet small{display:block;color:var(--muted);margin-top:2px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
+.quick button{border:1px solid var(--line);border-radius:15px;background:#fff;padding:12px 4px;color:var(--ink);font:inherit;font-size:11px;font-weight:700}
+.quick span{display:block;font-size:22px;margin-bottom:4px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:21px 2px 10px}
+h2{font-size:17px;margin:0}.muted{color:var(--muted);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 7px;text-align:center}
+.stat b{display:block;font-size:24px;color:var(--p)}.stat small{font-size:11px;color:var(--muted)}
+.panel,.task{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;margin:10px 0}
+.primary{border:0;border-radius:14px;padding:13px 16px;background:linear-gradient(110deg,var(--p),var(--p2));color:white;font:inherit;font-weight:750}
+.wide{width:100%}.secondary{border:1px solid #ddd7f5;background:#fff;color:var(--p);border-radius:12px;padding:10px 13px;font:inherit;font-weight:700}
+.field{width:100%;padding:12px;border:1px solid #e3e0ef;border-radius:11px;background:#fff;font:inherit;color:var(--ink);margin:6px 0 12px}
+label{font-size:12px;font-weight:700;color:#66627e}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.task{display:flex;gap:10px;align-items:center;padding:12px}.datebox{min-width:55px;text-align:center;background:#f0edff;color:var(--p);border-radius:12px;padding:9px 5px;font-size:11px;font-weight:800}
+.taskbody{flex:1;min-width:0}.tasktitle{font-weight:750;overflow-wrap:anywhere}.detail{font-size:11px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+.task.done .tasktitle{text-decoration:line-through;color:#9290a3}.task.done .datebox{background:#e8f7f0;color:var(--green)}
+.iconbtn{border:0;background:#f3f1fa;border-radius:9px;padding:8px 9px;color:#5d5877;font-size:14px}
+.pill{display:inline-block;font-size:10px;border-radius:20px;padding:3px 7px;background:#fff0f1;color:#c14d62;margin-top:4px}
+.tabs{position:fixed;z-index:5;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px 3px calc(8px + env(safe-area-inset-bottom))}
+.tabs button{border:0;background:none;color:#85819b;font:inherit;font-size:10px;min-width:54px;padding:4px}
+.tabs button span{display:block;font-size:19px}.tabs button.active{color:var(--p);font-weight:800}
+.hidden{display:none!important}.empty{text-align:center;padding:28px 8px;color:var(--muted);font-size:13px}
+.daygrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.daygrid div{padding:8px 1px;font-size:12px}.day{background:#fff;border-radius:10px;min-height:38px}.day.selected{background:var(--p);color:white}.day.has::after{content:"•";display:block;color:#e16a83;font-size:15px;line-height:8px}.day.selected.has::after{color:white}
+.progress{height:10px;background:#eeeaf8;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--p),#9a83f5);width:0}
+.note{font-size:11px;color:var(--muted);line-height:1.6}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions>*{flex:1}
+@media(min-width:620px){main{padding-left:22px;padding-right:22px}.brand{font-size:25px}}
 </style>
 </head>
 <body>
-<header><div class="top"><div><div class="brand">🎓 SchoolReminder</div><div class="tag">Plan · Remember · Be On Time</div></div><div style="font-size:25px">📚</div></div></header>
+<header><div class="headrow"><div><div class="brand">🎓 SchoolReminder</div><div class="subbrand">วางแผนงานเรียน ไม่พลาดกำหนดส่ง</div></div><div style="font-size:25px">📚</div></div></header>
 <main>
-<section class="stats">
- <div class="stat"><div class="num" id="total">0</div><small>งานทั้งหมด</small></div>
- <div class="stat"><div class="num" id="completed">0</div><small>เสร็จแล้ว</small></div>
- <div class="stat"><div class="num" id="pending">0</div><small>ยังไม่เสร็จ</small></div>
+<section id="homePage">
+ <div class="greet"><strong>สวัสดีครับ! ✨</strong><small>พร้อมจัดการงานของวันนี้หรือยัง?</small></div>
+ <div class="quick">
+  <button id="quickAdd"><span>➕</span>เพิ่มงานใหม่</button>
+  <button data-go="calendar"><span>🗓️</span>ปฏิทินงาน</button>
+  <button data-go="stats"><span>📊</span>สถิติของฉัน</button>
+  <button data-go="settings"><span>⚙️</span>ตั้งค่า</button>
+ </div>
+ <div class="stats">
+  <div class="stat"><b id="total">0</b><small>งานทั้งหมด</small></div>
+  <div class="stat"><b id="done">0</b><small>เสร็จแล้ว</small></div>
+  <div class="stat"><b id="pending">0</b><small>ยังไม่เสร็จ</small></div>
+ </div>
+ <div class="sectionhead"><h2>📌 งานใกล้ถึงกำหนด</h2><button class="secondary" data-go="tasks">ดูทั้งหมด</button></div>
+ <div id="upcoming"></div>
 </section>
-<div class="actions"><button class="primary" id="showForm">＋ เพิ่มงานใหม่</button><button class="ghost" id="notifyBtn">🔔 แจ้งเตือน</button></div>
-<section class="panel hidden" id="formPanel">
- <h2 style="margin-top:0">เพิ่มงานโรงเรียน</h2>
+
+<section id="tasksPage" class="hidden">
+ <div class="sectionhead"><h2>📝 งานทั้งหมด</h2><button class="primary" id="addTask">＋ เพิ่มงาน</button></div>
+ <input id="search" class="field" placeholder="ค้นหาชื่องานหรือวิชา...">
+ <select id="filter" class="field"><option value="all">งานทั้งหมด</option><option value="pending">ยังไม่เสร็จ</option><option value="done">เสร็จแล้ว</option><option value="late">เลยกำหนด</option></select>
+ <div id="allTasks"></div>
+</section>
+
+<section id="calendarPage" class="hidden">
+ <div class="sectionhead"><h2>🗓️ ปฏิทินงาน</h2></div>
+ <div class="panel">
+  <div class="actions" style="align-items:center"><button class="secondary" id="prevMonth">‹</button><strong id="monthLabel" style="flex:3;text-align:center"></strong><button class="secondary" id="nextMonth">›</button></div>
+  <div class="daygrid" id="calendarGrid"></div>
+ </div>
+ <div class="sectionhead"><h2 id="selectedLabel">งานของวันที่เลือก</h2></div><div id="dayTasks"></div>
+</section>
+
+<section id="statsPage" class="hidden">
+ <div class="sectionhead"><h2>📊 สถิติของฉัน</h2></div>
+ <div class="panel"><div class="muted">ความคืบหน้าการทำงาน</div><h2 style="font-size:28px;margin:7px 0" id="percent">0%</h2><div class="progress"><i id="progressBar"></i></div><p class="note" id="progressText"></p></div>
+ <div class="stats"><div class="stat"><b id="sTotal">0</b><small>ทั้งหมด</small></div><div class="stat"><b id="sDone">0</b><small>เสร็จแล้ว</small></div><div class="stat"><b id="sLate">0</b><small>เลยกำหนด</small></div></div>
+</section>
+
+<section id="settingsPage" class="hidden">
+ <div class="sectionhead"><h2>⚙️ ตั้งค่าและสำรองข้อมูล</h2></div>
+ <div class="panel">
+  <h2>สำรองข้อมูล</h2><p class="note">ดาวน์โหลดรายการงานเป็นไฟล์ JSON เพื่อเก็บไว้หรือย้ายไปอุปกรณ์อื่น</p>
+  <button class="primary wide" id="backup">ดาวน์โหลดข้อมูลสำรอง</button>
+ </div>
+ <div class="panel">
+  <h2>กู้คืนข้อมูล</h2><p class="note">เลือกไฟล์สำรอง JSON ที่เคยดาวน์โหลดไว้ การนำเข้าจะแทนที่รายการงานปัจจุบัน</p>
+  <input class="field" type="file" id="restoreFile" accept=".json,application/json">
+  <button class="secondary wide" id="restore">นำเข้าข้อมูลสำรอง</button>
+ </div>
+ <div class="panel">
+  <h2>การแจ้งเตือน</h2><p class="note">อนุญาตให้เว็บไซต์แสดงการแจ้งเตือนเมื่อเบราว์เซอร์รองรับ การแจ้งเตือนในรุ่นนี้ยังไม่ใช่ระบบเตือนอัตโนมัติเมื่อปิดแอป</p>
+  <button class="secondary wide" id="notify">ขออนุญาตแจ้งเตือน</button>
+ </div>
+ <p class="note">ข้อมูลเก็บไว้ในเบราว์เซอร์ของอุปกรณ์นี้ ควรสำรองข้อมูลก่อนล้างข้อมูลเว็บไซต์หรือเปลี่ยนอุปกรณ์</p>
+</section>
+
+<section id="formPanel" class="panel hidden">
+ <div class="sectionhead"><h2 id="formHeading">เพิ่มงานใหม่</h2><button class="iconbtn" id="closeForm">✕</button></div>
  <form id="taskForm">
-  <label for="title">ชื่องาน</label><input class="field" id="title" required maxlength="90" placeholder="เช่น ทำรายงานวิทยาศาสตร์">
-  <div class="row"><div><label for="subject">วิชา</label><input class="field" id="subject" maxlength="40" placeholder="เช่น วิทยาศาสตร์"></div>
-  <div><label for="due">วันส่ง</label><input class="field" id="due" type="date" required></div></div>
-  <label for="time">เวลา (ถ้าทราบ)</label><input class="field" id="time" type="time">
-  <label for="details">รายละเอียดเพิ่มเติม</label><textarea class="field" id="details" rows="2" maxlength="250" placeholder="รายละเอียดหรือสิ่งที่ต้องเตรียม"></textarea>
-  <button class="submit" type="submit">บันทึกงาน</button>
+  <label>ชื่องาน / กิจกรรม</label><input class="field" id="title" required maxlength="100" placeholder="เช่น ส่งรายงานวิทยาศาสตร์">
+  <label>วิชา</label><input class="field" id="subject" maxlength="50" placeholder="เช่น วิทยาศาสตร์">
+  <div class="grid2"><div><label>วันที่ครบกำหนด</label><input class="field" id="due" type="date" required></div><div><label>เวลา (ถ้ามี)</label><input class="field" id="time" type="time"></div></div>
+  <label>รายละเอียดเพิ่มเติม</label><textarea class="field" id="details" rows="2" maxlength="300" placeholder="เช่น ทำแบบฝึกหัดหน้า 10-15"></textarea>
+  <button class="primary wide" type="submit">บันทึกงาน</button>
  </form>
 </section>
-<h2 id="listHeading">งานที่ต้องทำ</h2>
-<div id="taskList"></div>
-<section class="panel hidden" id="statsPanel"><h2 style="margin-top:0">สถิติของฉัน</h2><p id="statsText"></p><p class="note">สถิติคำนวณจากงานที่บันทึกไว้ในอุปกรณ์นี้</p></section>
-<p class="note">ข้อมูลเก็บไว้ในเบราว์เซอร์ของอุปกรณ์นี้ หากล้างข้อมูลเว็บไซต์หรือเปลี่ยนอุปกรณ์ ข้อมูลอาจหายได้ ควรสำรองข้อมูลไว้</p>
 </main>
 <nav class="tabs">
-<button class="active" data-tab="home">⌂<br>หน้าหลัก</button>
-<button data-tab="calendar">▦<br>ปฏิทิน</button>
-<button data-tab="alerts">♧<br>แจ้งเตือน</button>
-<button data-tab="stats">▥<br>สถิติ</button>
+ <button class="active" data-page="home"><span>⌂</span>หน้าหลัก</button>
+ <button data-page="tasks"><span>☷</span>งาน</button>
+ <button data-page="calendar"><span>▦</span>ปฏิทิน</button>
+ <button data-page="stats"><span>▥</span>สถิติ</button>
+ <button data-page="settings"><span>⚙</span>ตั้งค่า</button>
 </nav>
 <script>
 const KEY='schoolreminder.tasks.v1';
-let tasks=JSON.parse(localStorage.getItem(KEY)||'[]');
 const $=id=>document.getElementById(id);
-const today=()=>new Date().toISOString().slice(0,10);
-function save(){localStorage.setItem(KEY,JSON.stringify(tasks));render();}
-function fmt(d){if(!d)return '-';return new Date(d+'T00:00:00').toLocaleDateString('th-TH',{day:'numeric',month:'short'});}
-function render(){
- $('total').textContent=tasks.length;
- $('completed').textContent=tasks.filter(t=>t.done).length;
- $('pending').textContent=tasks.filter(t=>!t.done).length;
- const mode=document.querySelector('.tabs button.active')?.dataset.tab||'home';
- let shown=[...tasks].sort((a,b)=>a.due.localeCompare(b.due));
- if(mode==='alerts') shown=shown.filter(t=>!t.done && t.due<=today());
- if(mode==='calendar') shown=shown.filter(t=>t.due>=today());
- $('listHeading').textContent=mode==='calendar'?'งานตามกำหนดส่ง':mode==='alerts'?'งานที่ถึงกำหนดหรือเลยกำหนด':'งานที่ต้องทำ';
- $('taskList').innerHTML=shown.length?'':'<div class="empty">ยังไม่มีงานในรายการ<br>กด “เพิ่มงานใหม่” เพื่อเริ่มต้น</div>';
- shown.forEach(t=>{
-  const el=document.createElement('div');el.className='task'+(t.done?' done':'');
-  const dueLabel=t.due<today()&&!t.done?'เลยกำหนด':t.due===today()&&!t.done?'วันนี้':fmt(t.due);
-  el.innerHTML=`<div class="datebox">${dueLabel}</div><div class="taskbody"><div class="tasktitle"></div><div class="sub"></div></div><button class="iconbtn" aria-label="เปลี่ยนสถานะ">${t.done?'↶':'✓'}</button><button class="iconbtn" aria-label="ลบงาน">×</button>`;
-  el.querySelector('.tasktitle').textContent=t.title;
-  el.querySelector('.sub').textContent=[t.subject,t.time?'เวลา '+t.time:'',t.details].filter(Boolean).join(' · ');
-  const buttons=el.querySelectorAll('button');
-  buttons[0].onclick=()=>{t.done=!t.done;save();};
-  buttons[1].onclick=()=>{if(confirm('ต้องการลบงานนี้หรือไม่?')){tasks=tasks.filter(x=>x.id!==t.id);save();}};
-  $('taskList').appendChild(el);
- });
- $('statsText').textContent=`ทำเสร็จ ${tasks.filter(t=>t.done).length} จาก ${tasks.length} งาน`;
- $('statsPanel').classList.toggle('hidden',mode!=='stats');
- $('taskList').classList.toggle('hidden',mode==='stats');
- $('formPanel').classList.toggle('hidden',mode==='stats');
-}
-$('showForm').onclick=()=>{$('formPanel').classList.toggle('hidden');$('title').focus();};
-$('taskForm').onsubmit=e=>{e.preventDefault();tasks.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title:$('title').value.trim(),subject:$('subject').value.trim(),due:$('due').value,time:$('time').value,details:$('details').value.trim(),done:false});save();e.target.reset();$('formPanel').classList.add('hidden');};
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');render();});
-$('notifyBtn').onclick=async()=>{
- if(!('Notification' in window)){alert('เบราว์เซอร์นี้ยังไม่รองรับการแจ้งเตือน');return;}
- if(!('serviceWorker' in navigator)){alert('ต้องเปิดแอปผ่านเว็บไซต์ HTTPS ที่ติดตั้ง Service Worker ก่อน');return;}
- const p=await Notification.requestPermission();
- if(p==='granted'){alert('เปิดสิทธิ์แจ้งเตือนแล้ว ในรุ่นทดลองนี้จะตรวจงานเมื่อเปิดแอปอยู่');}
- else alert('ยังไม่ได้อนุญาตการแจ้งเตือน');
-};
-if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
-$('due').min=today();
-render();
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+let tasks=[];try{tasks=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){tasks=[]}
+let editingId=null, monthCursor=new Date(), selectedDate=today();
+const pages=['home','tasks','calendar','stats','settings'];
+function save(){localStorage.setItem(KEY,JSON.stringify(tasks));renderAll()}
+function fmt(d){if(!d)return '-';const [y,m,day]=d.split('-').map(Number);return new Date(y,m-1,day).toLocaleDateString('th-TH',{day:'numeric',month:'short'})}
+function safe(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function go(page){pages.forEach(p=>$(p+'Page').classList.toggle('hidden',p!==page));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('formPanel').classList.add('hidden');if(page==='calendar')renderCalendar();if(page==='tasks')renderTasks();if(page==='stats')renderStats()}
+function taskCard(t){const late=!t.done&&t.due<today();const el=document.createElement('div');el.className='task'+(t.done?' done':'');el.innerHTML=`<div class="datebox">${fmt(t.due)}</div><div class="taskbody"><div class="tasktitle">${safe(t.title)}</div><div class="detail">${safe([t.subject,t.time?'เวลา '+t.time:'',t.details].filter(Boolean).join(' · '))}</div>${late?'<span class="pill">เลยกำหนด</span>':''}</div><button class="iconbtn" title="ทำเครื่องหมาย">${t.done?'↶':'✓'}</button><button class="iconbtn" title="แก้ไข">✎</button><button class="iconbtn" title="ลบ">×</button>`;
+ const bs=el.querySelectorAll('button');bs[0].onclick=()=>{t.done=!t.done;save()};bs[1].onclick=()=>openEdit(t);bs[2].onclick=()=>{if(confirm('ต้องการลบงานนี้ใช่ไหม?')){tasks=tasks.filter(x=>x.id!==t.id);save()}};
+ return el}
+function putList(target,list){const box=$(target);box.innerHTML='';if(!list.length){box.innerHTML='<div class="empty">ยังไม่มีงานในรายการนี้</div>';return}list.forEach(t=>box.appendChild(taskCard(t)))}
+function renderHome(){const sorted=[...tasks].filter(t=>!t.done).sort((a,b)=>a.due.localeCompare(b.due)).slice(0,5);putList('upcoming',sorted);$('total').textContent=tasks.length;$('done').textContent=tasks.filter(t=>t.done).length;$('pending').textContent=tasks.filter(t=>!t.done).length}
+function renderTasks(){const q=$('search').value.trim().toLowerCase(),f=$('filter').value;let list=[...tasks].sort((a,b)=>a.due.localeCompare(b.due));list=list.filter(t=>(t.title+' '+t.subject+' '+t.details).toLowerCase().includes(q));if(f==='pending')list=list.filter(t=>!t.done);if(f==='done')list=list.filter(t=>t.done);if(f==='late')list=list.filter(t=>!t.done&&t.due<today());putList('allTasks',list)}
+function renderStats(){const done=tasks.filter(t=>t.done).length,late=tasks.filter(t=>!t.done&&t.due<today()).length,p=tasks.length?Math.round(done/tasks.length*100):0;$('percent').textContent=p+'%';$('progressBar').style.width=p+'%';$('progressText').textContent=`ทำเสร็จแล้ว ${done} จาก ${tasks.length} งาน`;$('sTotal').textContent=tasks.length;$('sDone').textContent=done;$('sLate').textContent=late}
+function renderCalendar(){const y=monthCursor.getFullYear(),m=monthCursor.getMonth(),first=new Date(y,m,1),start=(first.getDay()),days=new Date(y,m+1,0).getDate();$('monthLabel').textContent=first.toLocaleDateString('th-TH',{month:'long',year:'numeric'});const g=$('calendarGrid');g.innerHTML='';['อา','จ','อ','พ','พฤ','ศ','ส'].forEach(x=>{const d=document.createElement('div');d.className='muted';d.textContent=x;g.appendChild(d)});for(let i=0;i<start;i++){g.appendChild(document.createElement('div'))}for(let n=1;n<=days;n++){const key=`${y}-${String(m+1).padStart(2,'0')}-${String(n).padStart(2,'0')}`,d=document.createElement('div');d.className='day'+(key===selectedDate?' selected':'')+(tasks.some(t=>t.due===key)?' has':'');d.textContent=n;d.onclick=()=>{selectedDate=key;renderCalendar()};g.appendChild(d)}$('selectedLabel').textContent='งานวันที่ '+fmt(selectedDate);putList('dayTasks',tasks.filter(t=>t.due===selectedDate))}
+function renderAll(){renderHome();renderTasks();renderStats();if(!$('calendarPage').classList.contains('hidden'))renderCalendar()}
+function openForm(){editingId=null;$('formHeading').textContent='เพิ่มงานใหม่';$('taskForm').reset();$('due').value=today();$('formPanel').classList.remove('hidden');$('title').focus()}
+function openEdit(t){editingId=t.id;$('formHeading').textContent='แก้ไขงาน';$('title').value=t.title||'';$('subject').value=t.subject||'';$('due').value=t.due||today();$('time').value=t.time||'';$('details').value=t.details||'';$('formPanel').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
+$('taskForm').onsubmit=e=>{e.preventDefault();const data={title:$('title').value.trim(),subject:$('subject').value.trim(),due:$('due').value,time:$('time').value,details:$('details').value.trim()};if(editingId){const t=tasks.find(x=>x.id===editingId);Object.assign(t,data)}else{tasks.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),...data,done:false})}save();$('formPanel').classList.add('hidden');e.target.reset();editingId=null};
+$('closeForm').onclick=()=>$('formPanel').classList.add('hidden');$('quickAdd').onclick=openForm;$('addTask').onclick=openForm;
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+$('search').oninput=renderTasks;$('filter').onchange=renderTasks;
+$('prevMonth').onclick=()=>{monthCursor.setMonth(monthCursor.getMonth()-1);renderCalendar()};$('nextMonth').onclick=()=>{monthCursor.setMonth(monthCursor.getMonth()+1);renderCalendar()};
+$('backup').onclick=()=>{const blob=new Blob([JSON.stringify({app:'SchoolReminder',version:1,tasks},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='schoolreminder-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('restore').onclick=async()=>{const file=$('restoreFile').files[0];if(!file){alert('กรุณาเลือกไฟล์สำรองก่อน');return}try{const data=JSON.parse(await file.text()),items=Array.isArray(data)?data:data.tasks;if(!Array.isArray(items))throw Error();if(!confirm('การนำเข้าจะแทนที่รายการงานปัจจุบัน ต้องการดำเนินการต่อไหม?'))return;tasks=items;save();alert('นำเข้าข้อมูลเรียบร้อย')}catch(e){alert('ไฟล์ไม่ถูกต้องหรืออ่านไม่ได้')}};
+$('notify').onclick=async()=>{if(!('Notification'in window)){alert('เบราว์เซอร์นี้ไม่รองรับการแจ้งเตือน');return}const p=await Notification.requestPermission();alert(p==='granted'?'อนุญาตการแจ้งเตือนแล้ว':'ยังไม่ได้อนุญาตการแจ้งเตือน')};
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+$('due').min=today();renderAll();
 </script>
 </body></html>
